@@ -27,7 +27,7 @@ class Customer extends User
     private ?string $genre = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $birthday = null;
+    private ?\DateTimeInterface $birthdate = null;
 
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Address::class, orphanRemoval: true)]
     private Collection $addresses;
@@ -63,26 +63,26 @@ class Customer extends User
         return $this;
     }
 
-    public function isGenre(): ?bool
+    public function getGenre(): ?string
     {
         return $this->genre;
     }
 
-    public function setGenre(bool $genre): static
+    public function setGenre(string $genre): static
     {
         $this->genre = $genre;
 
         return $this;
     }
 
-    public function getBirthday(): ?\DateTimeInterface
+    public function getBirthdate(): ?\DateTimeInterface
     {
-        return $this->birthday;
+        return $this->birthdate;
     }
 
-    public function setBirthday(\DateTimeInterface $birthday): static
+    public function setBirthdate(\DateTimeInterface $birthdate): static
     {
-        $this->birthday = $birthday;
+        $this->birthdate = $birthdate;
 
         return $this;
     }

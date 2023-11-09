@@ -9,20 +9,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PartnerRepository::class)]
-class Partner
+class Partner extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
+    #[Assert\NotBlank()]
     private ?string $name = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Assert\Length(max: 20)]
     private ?string $phone = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotNull()]
     private ?string $type = null;
 
     #[ORM\OneToMany(mappedBy: 'partner', targetEntity: Address::class, orphanRemoval: true)]
@@ -30,6 +28,8 @@ class Partner
 
     public function __construct()
     {
+        parent::__construct(); // Appelle le construct de User
+        $this->setRoles(['ROLE_USER', 'ROLE_PARTNER']);
         $this->addresses = new ArrayCollection();
     }
 

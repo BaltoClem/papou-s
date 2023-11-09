@@ -4,6 +4,7 @@ namespace App\EntityListener;
 
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserListener
@@ -17,17 +18,18 @@ class UserListener
 
 
     public function prePersist(User $user)  // Permet d'encoder le password quand $user est persisté (se déclenche au premier persist) 
-                                            // (en récupérant le plainPassword donné dans AppFixtures)
+                                            // (en récupérant le plainPassword donné dans AppFixtures ou quand un utilisateur est créé)
     {
         $this->encodePassword($user);
-        
     }
 
 
-    public function preUpdate(User $user)  // Permet d'encoder le password quand $user est modifié 
-                                                 // (en récupérant le plainPassword donné dans AppFixtures)
+    public function preUpdate(User $user, LifecycleEventArgs $event)  // Permet d'encoder le password quand $user est modifié 
+    // (en récupérant le plainPassword donné dans AppFixtures ou quand un utilisateur est modifié)
     // (se déclenche au flush(), mais nécessite une modification de colonne pour être déclenché ! Exemple : la colonne 'updatedAt") 
     {
+        $user->setUpdatedAt(new \DateTimeImmutable());
+        
         $this->encodePassword($user);
     }
 
