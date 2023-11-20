@@ -1,0 +1,93 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-1">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('home.index') }}">Papou<sup>© </sup><i class="fa-solid fa-kiwi-bird" style="color: rgb(0, 255, 195);"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link mx-1" href="{# {{ path('home.index') }} #}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-1" href="{# {{ path('categorie.index') }} #}">Boutique</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-1" href="{# {{ path('about.index') }} #}">A propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-1" href="{# {{ path('contact.index') }} #}">Nous contacter</a>
+                </li>
+            </ul>
+
+            <form class="searchBar d-flex mx-4">
+                    <input class="form-control me-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0 d-flex justify-content-center align-items-center" type="submit">Search</button>
+            </form>
+
+            {# !!!!!  Bouton Panier  !!!!! #}
+            {# {% if quantiteTotale is defined %}
+                <a href="{{path("panier")}}" class="boutonPanier btn btn-success d-flex justify-content-center align-items-center mx-5" title="Afficher le panier">
+                Panier &nbsp; <i class="fa-solid fa-cart-shopping"></i>({{ quantiteTotale }})</a>
+            {% else %}
+                <a href="{{path("panier")}}" class="boutonPanier btn btn-success d-flex justify-content-center align-items-center mx-5" title="Afficher le panier">
+                Panier &nbsp; <i class="fa-solid fa-cart-shopping"></i></a>
+            {% endif %} #}
+            
+            
+            
+            
+            <div class="d-flex mx-1">
+                <ul class="navbar-nav me-auto">
+
+                    {% if app.user %} {# Si l'utilisateur est connecté #}
+
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" 
+                                role="button" aria-haspopup="true" aria-expanded="false">
+                                {% if 'ROLE_ADMIN' in app.user.roles %}  {# Si l'utilisateur connecté à un rôle ADMIN #}
+                                    Administrateur
+                                {% elseif 'ROLE_CUSTOMER' in app.user.roles %}  {# Si l'utilisateur connecté à un rôle CUSTOMER #}
+                                    {{ app.user.firstname }} {{ app.user.lastname }}
+                                {% elseif 'ROLE_PARTNER' in app.user.roles %}  {# Si l'utilisateur connecté à un rôle PARTNER #}
+                                    {{ app.user.name }}
+                                {% endif %}
+                            </a>
+                        
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="{# {{ path('user.edit', {choosenUser : app.user.id}) }} #}">Modifier mon profil</a>
+                                <a class="dropdown-item" href="{# {{ path('user.editPassword', {choosenUser : app.user.id}) }} #}">Modifier mon mot de passe</a>
+                                <a class="dropdown-item" href="{# {{ path('adresse.index', {choosenUser : app.user.id}) }} #}">Mes adresses</a>
+                                <a class="dropdown-item" href="{# {{ path('historique.index', {choosenUser : app.user.id}) }} #}">Mon historique de commandes</a>
+                                
+                                {% if 'ROLE_ADMIN' in app.user.roles %}  {# Si l'utilisateur connecté à un rôle Admin #}
+
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{# {{ path('admin.index') }} #}">Panneau d'administration</a>
+
+                                {% endif %}
+                                
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ path('security.logout') }}">Déconnexion</a>
+                            </div>
+                        </li>
+                        
+
+                    {% else %} {# Si l'utilisateur n'est pas connecté #}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('security.login') }}">Connexion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{# {{ path('security.registration') }} #}">Inscription</a>
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+            </div>
+           
+        </div>
+    </div>
+</nav>

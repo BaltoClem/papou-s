@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BeerPardise - Connexion{% endblock %} 
+
+{% block body %}
+
+    <div class="container">
+        <h1 class="mt-4">Connexion</h1>
+        <hr class="my-2">
+
+        {# !!!!! MESSAGE FLASH !!!!! #}
+
+        {% for message in app.flashes('success') %}          {# success = Nom de l'alerte  #}
+            <div class="alert alert-success mt-4">           {# alert-success = Type d'alerte Bootstrap #}
+                <h5>{{ message.info }}</h5>
+                {{message.bonus}}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('warning') %}          {# warning = Nom de l'alerte  #}
+            <div class="alert alert-warning mt-4">           {# alert-warning = Type d'alerte Bootstrap #}
+                <h5>{{ message.info }}</h5>
+                {{message.bonus}}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('danger') %}          {# danger = Nom de l'alerte  #}
+            <div class="alert alert-danger mt-4">           {# alert-danger = Type d'alerte Bootstrap #}
+                <h5>{{ message.info }}</h5>
+                {{message.bonus}}
+            </div>
+        {% endfor %}
+        
+        {# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #}
+
+        {# {% if error %}
+            <div class="alert alert-danger mt-4">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div> 
+        {% endif %} #}
+        
+        <form action="{{ path('security.login') }}" method="post" name="login">
+            <div class="form-group">
+                <label for="username" class="form-label mt-2">Adresse email</label>
+                <input type="email" class="form-control" id="username" name="_username" placeholder="Entrez votre email" value="{{ last_username }}">
+                {# name="_username" --> Pour que le login sache où trouver le username #}
+                <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre e-mail avec quelqu'un d'autre.</small>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label mt-4">Mot de passe</label>
+                <input type="password" class="form-control" id="password" name="_password" placeholder="Entrez votre mot de passe">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Se connecter</button>
+
+        </form>
+    
+    </div>
+
+
+{% endblock %}
