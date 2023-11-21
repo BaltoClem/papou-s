@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BeerPardise - Connexion{% endblock %} 
+{% block title %}Papou - Connexion{% endblock %} 
 
 {% block body %}
 
@@ -50,8 +50,9 @@
                 <label for="password" class="form-label mt-4">Mot de passe</label>
                 <input type="password" class="form-control" id="password" name="_password" placeholder="Entrez votre mot de passe">
             </div>
+            <small><a href="{{ path('reset_password_request') }}">Mot de passe oublié ? Faites une demande de réinitialisation de mot de passe en cliquant sur ce lien</a></small>
 
-            <button type="submit" class="btn btn-primary mt-3">Se connecter</button>
+            <div><button type="submit" class="btn btn-primary mt-3">Se connecter</button></div>
 
         </form>
     

@@ -19,6 +19,11 @@ security:
             form_login:
                 login_path: security.login
                 check_path: security.login
+            remember_me:
+                secret: '%env(APP_SECRET)%'
+                lifetime: 86400 # durée de validité du cookie (en secondes)
+                path: /
+                domain: ~ # domaine du cookie
             logout:
                 path: security.logout
 
